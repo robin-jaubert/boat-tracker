@@ -1,1 +1,1 @@
-# BoatTracker
+# boat-tracker
