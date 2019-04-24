@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "365923418525",
+    "firebase_url": "https://boattracker-fc15a.firebaseio.com",
+    "project_id": "boattracker-fc15a",
+    "storage_bucket": "boattracker-fc15a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365923418525:android:c249b14742f98846",
+        "android_client_info": {
+          "package_name": "com.example.boattracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "365923418525-ogisqvbmcbqgpse4upsfindsshpdegvr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.boattracker",
+            "certificate_hash": "dccd8b2d224970b0ad0ac18b6e3aa0e2eeb6708e"
+          }
+        },
+        {
+          "client_id": "365923418525-7arujp7p9jqqefpitvrffk4lsfcg3t0k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXvqcGh189gsK2YuA6gFoL3_N0FkABlm8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "365923418525-7arujp7p9jqqefpitvrffk4lsfcg3t0k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
