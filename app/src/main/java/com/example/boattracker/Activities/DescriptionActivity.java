@@ -22,7 +22,7 @@ public class DescriptionActivity extends AppCompatActivity {
 
         TextView nomBateau = findViewById(R.id.description_info_boat_name);
         TextView nomModele = findViewById(R.id.description_info_boat_model);
-        //temporaire
+
         //Toast.makeText(getApplicationContext(), boatReceived.getCurrentLocation().distanceTo(boatReceived.getDepart().getPointDepart()) + "", Toast.LENGTH_SHORT).show();
 
         //original

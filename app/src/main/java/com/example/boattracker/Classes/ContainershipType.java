@@ -9,21 +9,25 @@ public class ContainershipType implements Serializable {
     private int id;
 
     private String name;
-    private int length, width, heigth;
+
+    private int width;
+    private int length;
+    private int heigth;
 
     public ContainershipType(String name) {
         this.name = name;
         this.id = count;
         determineSize(name);
+        //this.id = count;
         //setCount(++count);
     }
 
     public void determineSize(String name){
         switch (name){
             case "yacht":
+                setWidth(5);
                 setHeigth(5);
                 setLength(20);
-                setWidth(5);
                 break;
 
             case "radeau":
@@ -56,14 +60,16 @@ public class ContainershipType implements Serializable {
                 setWidth(6);
                 break;
 
-            case "aeroglisseur":
+            case "hydroglisseur":
                 setHeigth(1);
                 setLength(4);
                 setWidth(2);
                 break;
 
             default:
-                new ContainershipType("yacht");
+                setWidth(3);
+                setHeigth(6);
+                setLength(12);
                 break;
         }
     }
@@ -77,6 +83,13 @@ public class ContainershipType implements Serializable {
     }
 
     public String getName() {
+        if (!this.name.equals("yacht")
+                || !this.name.equals("paquebot")
+                || !this.name.equals("radeau")
+                || !this.name.equals("hydroglisseur")
+                ||!this.name.equals("caravelle")
+                ||!this.name.equals("pirogue"))
+            return "Inconnu";
         return name;
     }
 
@@ -107,4 +120,6 @@ public class ContainershipType implements Serializable {
     public void setHeigth(int heigth) {
         this.heigth = heigth;
     }
+
+
 }
