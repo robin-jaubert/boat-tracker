@@ -19,13 +19,13 @@ public class Containership implements Serializable {
     private ContainershipType type;
 
 
-    public Containership(String boat_name, String captain_name, double latitude, double longitude, Port port/*, String model*/) {
+    public Containership(String boat_name, String captain_name, double latitude, double longitude, Port port, String model) {
         this.setBoat_name(boat_name);
         this.setCaptain_name(captain_name);
         setLatitude(latitude);
         setLongitude(longitude);
         setDepart(port);
-        //this.type = new ContainershipType(model);
+        this.type = new ContainershipType(model);
         /*this.id = count;
         setCount(++count);*/
     }
@@ -75,6 +75,14 @@ public class Containership implements Serializable {
     }
 
     public int getId(){return id;}
+
+    public ContainershipType getType() {
+        return type;
+    }
+
+    public void setType(ContainershipType type) {
+        this.type = type;
+    }
 
     @Override
     public String toString() {

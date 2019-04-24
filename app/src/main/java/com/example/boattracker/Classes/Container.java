@@ -1,6 +1,8 @@
 package com.example.boattracker.Classes;
 
-public class Container {
+import java.io.Serializable;
+
+public class Container implements Serializable {
 
     private static int count = 0;
 

@@ -1,6 +1,8 @@
 package com.example.boattracker.Classes;
 
-public class ContainershipContainer {
+import java.io.Serializable;
+
+public class ContainershipContainer implements Serializable {
 
     private int containershipId;
     private int containerId;
