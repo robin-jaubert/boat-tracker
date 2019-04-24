@@ -27,7 +27,7 @@ public class DescriptionActivity extends AppCompatActivity {
 
         //original
         nomBateau.setText("Bateau : " + boatReceived.getBoat_name());
-        nomModele.setText("Modele : " + boatReceived.getType().getName());
+        //nomModele.setText("Modele : " + boatReceived.getBoat_model());
 
         final Button distance = findViewById(R.id.description_button_distance);
         distance.setOnClickListener(new View.OnClickListener() {

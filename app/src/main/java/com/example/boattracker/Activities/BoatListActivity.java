@@ -26,9 +26,13 @@ public class BoatListActivity extends AppCompatActivity {
 
         final ArrayList<Containership> ListeDesBateaux = new ArrayList<>();
 
-        ListeDesBateaux.add(new Containership("McBoatface", "Boaty", -31.453988, 153.048861, new Port("Le Havre",49.486518, 0.090639), "paquebot"));
-        ListeDesBateaux.add(new Containership("Bacon", "Chris P.",61.902974,-8.050389,new Port ("Dublin", 53.344926, -6.196133), "fregate"));
-        ListeDesBateaux.add(new Containership("Mark", "Oh hi", 67.656155, -80.170957, new Port("Key Biscane", 25.687693, -80.155197), "caravelle"));
+        //ListeDesBateaux.add(new Containership("Bacon", "Chris P."));
+        //ListeDesBateaux.add(new Containership("McBoatface", "Boaty"));
+        //ListeDesBateaux.add(new Containership("Cumminers", "Bendadick"));
+
+        ListeDesBateaux.add(new Containership("McBoatface", "Boaty", -31.453988, 153.048861, new Port("Le Havre",49.486518, 0.090639)));
+        ListeDesBateaux.add(new Containership("Bacon", "Chris P.",61.902974,-8.050389,new Port ("Dublin", 53.344926, -6.196133)));
+        ListeDesBateaux.add(new Containership("Mark", "Oh hi", 67.656155, -80.170957, new Port("Key Biscane", 25.687693, -80.155197)));
 
         BoatItemAdapter adapter = new BoatItemAdapter(getApplicationContext(), ListeDesBateaux);
         listBoatDisplay.setAdapter(adapter);
