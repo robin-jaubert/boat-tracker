@@ -8,8 +8,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.boattracker.Classes.Container;
 import com.example.boattracker.Classes.Containership;
 import com.example.boattracker.Classes.BoatItemAdapter;
+import com.example.boattracker.Classes.ContainershipType;
 import com.example.boattracker.Classes.Port;
 import com.example.boattracker.R;
 
@@ -26,9 +28,14 @@ public class BoatListActivity extends AppCompatActivity {
 
         final ArrayList<Containership> ListeDesBateaux = new ArrayList<>();
 
-        ListeDesBateaux.add(new Containership("McBoatface", "Boaty", -31.453988, 153.048861, new Port("Le Havre",49.486518, 0.090639), "paquebot"));
-        ListeDesBateaux.add(new Containership("Bacon", "Chris P.",61.902974,-8.050389,new Port ("Dublin", 53.344926, -6.196133), "hydroglisseur"));
-        ListeDesBateaux.add(new Containership("Mark", "Oh hi", 67.656155, -80.170957, new Port("Key Biscane", 25.687693, -80.155197), "girouette"));
+        Containership bato = new Containership.ContainershipBuilder("McBoatface", "Boaty").addPosition(-31.453988, 153.048861).addPort(new Port("Le Havre",49.486518, 0.090639)).addType(new ContainershipType("paquebot")).build();
+        Containership batoo = new Containership.ContainershipBuilder("Bacon", "Chris P.").addPosition(61.902974,-8.050389).addPort(new Port ("Dublin", 53.344926, -6.196133)).addType(new ContainershipType("hydroglisseur")).build();
+        Containership batooo = new Containership.ContainershipBuilder("Mark", "Oh hi").addPosition(67.656155, -80.170957).addPort(new Port("Key Biscane", 25.687693, -80.155197)).addType(new ContainershipType("girouette")).build();
+
+        
+        ListeDesBateaux.add(bato);
+        ListeDesBateaux.add(batoo);
+        ListeDesBateaux.add(batooo);
 
         BoatItemAdapter adapter = new BoatItemAdapter(getApplicationContext(), ListeDesBateaux);
         listBoatDisplay.setAdapter(adapter);

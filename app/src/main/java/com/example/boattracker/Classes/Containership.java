@@ -18,21 +18,24 @@ public class Containership implements Serializable {
 
     private ContainershipType type;
 
+    private Container conteneur;
 
-    public Containership(String boat_name, String captain_name, double latitude, double longitude, Port port, String model) {
-        this.setBoat_name(boat_name);
-        this.setCaptain_name(captain_name);
-        setLatitude(latitude);
-        setLongitude(longitude);
-        setDepart(port);
-        this.type = new ContainershipType(model);
+
+    public Containership (ContainershipBuilder builder){
+        this.boat_name = builder.boat_name;
+        this.captain_name = builder.captain_name;
+        this.latitude = builder.latitude;
+        this.longitude = builder.longitude;
+        this.depart = builder.depart;
+        this.type = builder.type;
+        this.conteneur = builder.conteneur;
         /*this.id = count;
         setCount(++count);*/
     }
 
-    /*private void setCount(int i) {
+    private void setCount(int i) {
         count = i;
-    }*/
+    }
 
     public String getBoat_name() {
         return boat_name;
@@ -84,8 +87,62 @@ public class Containership implements Serializable {
         this.type = type;
     }
 
+    public Container getConteneur() {
+        return conteneur;
+    }
+
+    public void setConteneur(Container conteneur) {
+        this.conteneur = conteneur;
+    }
+
     @Override
     public String toString() {
         return "Bateau : " + boat_name + "\n"+ "Nom du capitaine : " + captain_name;
+    }
+
+
+    public static class ContainershipBuilder{
+        private String boat_name;
+        private String captain_name;
+
+        private double latitude;
+        private double longitude;
+
+        private Port depart;
+
+        private ContainershipType type;
+
+        private Container conteneur;
+
+        public ContainershipBuilder (String name, String captain){
+            this.boat_name = name;
+            this.captain_name = captain;
+        }
+
+        public ContainershipBuilder addPosition(double lat, double lon){
+            this.latitude = lat;
+            this.longitude = lon;
+            return this;
+        }
+
+        public ContainershipBuilder addPort (Port port){
+            this.depart = port;
+            return this;
+        }
+
+        public ContainershipBuilder addType (ContainershipType type){
+            this.type = type;
+            return this;
+        }
+
+        public ContainershipBuilder addContainer (Container conteneur){
+            this.conteneur = conteneur;
+            return this;
+        }
+
+        public Containership build(){
+            return new Containership(this);
+        }
+
     }
 }
