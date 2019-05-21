@@ -116,7 +116,7 @@ public class Containership implements Serializable {
 
         public ContainershipBuilder (String name, String captain){
             this.boat_name = name;
-            this.captain_name = captain;
+            this.captain_name = captain;    
         }
 
         public ContainershipBuilder addPosition(double lat, double lon){
