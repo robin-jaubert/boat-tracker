@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public class Containership implements Serializable {
 
-    private static int count = 0;
+    //private static int count = 0;
 
-    private int id;
+    //private int id;
 
     private String boat_name;
     private String captain_name;
@@ -33,9 +33,9 @@ public class Containership implements Serializable {
         setCount(++count);*/
     }
 
-    private void setCount(int i) {
+    /*private void setCount(int i) {
         count = i;
-    }
+    }*/
 
     public String getBoat_name() {
         return boat_name;
@@ -77,7 +77,7 @@ public class Containership implements Serializable {
         return depart;
     }
 
-    public int getId(){return id;}
+    //public int getId(){return id;}
 
     public ContainershipType getType() {
         return type;
