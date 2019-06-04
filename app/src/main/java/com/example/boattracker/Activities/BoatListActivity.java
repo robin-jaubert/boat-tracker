@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -16,6 +17,12 @@ import com.example.boattracker.Classes.BoatItemAdapter;
 import com.example.boattracker.Classes.ContainershipType;
 import com.example.boattracker.Classes.Port;
 import com.example.boattracker.R;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -31,10 +38,25 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 public class BoatListActivity extends AppCompatActivity {
 
+    private GoogleSignInClient mGoogleSignInClient;
+    private static final int RC_SIGN_IN = 7;
     static String TAG = "BoatListActivity";
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +76,11 @@ public class BoatListActivity extends AppCompatActivity {
         Containership batooo = new Containership.ContainershipBuilder("Mark", "Oh hi").addPosition(67.656155, -80.170957).addPort(new Port("Key Biscane", 25.687693, -80.155197)).addType(new ContainershipType("girouette")).build();
 
 
-        writeAllObjects(bato);
+        //writeAllObjects(bato);
 
         ListeDesBateaux.add(bato);
         ListeDesBateaux.add(batoo);
         ListeDesBateaux.add(batooo);
-
-
 
         BoatItemAdapter adapter = new BoatItemAdapter(getApplicationContext(), ListeDesBateaux);
         listBoatDisplay.setAdapter(adapter);
@@ -76,6 +96,29 @@ public class BoatListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        GoogleSignInAccount compte = GoogleSignIn.getLastSignedInAccount(this);
+
+        final SignInButton signin = findViewById(R.id.signIn_Button);
+
+        signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()){
+                    case R.id.signIn_Button:
+                        signIn();
+                        break;
+                }
+            }
+        });
+
+
+
     }
 
     public void writeInDb(Object o, String collection, String document){
@@ -148,4 +191,35 @@ public class BoatListActivity extends AppCompatActivity {
         else
             updateFieldInDb(bato, "Containership", bato.getBoat_name());
     }
+
+    private void signIn(){
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+
+            // Signed in successfully, show authenticated UI.
+            updateUI(account);
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+            updateUI(null);
+        }
+    }
+
+    private void updateUI(GoogleSignInAccount account){
+        if (account != null){
+            //ici quand identifié
+
+        }
+        else{
+            //ici non
+        }
+    }
+
+
 }
