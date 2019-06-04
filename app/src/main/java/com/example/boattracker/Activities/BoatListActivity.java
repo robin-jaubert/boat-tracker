@@ -16,12 +16,16 @@ import com.example.boattracker.Classes.BoatItemAdapter;
 import com.example.boattracker.Classes.ContainershipType;
 import com.example.boattracker.Classes.Port;
 import com.example.boattracker.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 
 import java.util.ArrayList;
@@ -50,8 +54,7 @@ public class BoatListActivity extends AppCompatActivity {
         Containership batooo = new Containership.ContainershipBuilder("Mark", "Oh hi").addPosition(67.656155, -80.170957).addPort(new Port("Key Biscane", 25.687693, -80.155197)).addType(new ContainershipType("girouette")).build();
 
 
-        writeAllObjects(batooo);
-
+        writeAllObjects(bato);
 
         ListeDesBateaux.add(bato);
         ListeDesBateaux.add(batoo);
@@ -75,21 +78,10 @@ public class BoatListActivity extends AppCompatActivity {
         });
     }
 
-    public void writeInDb(Object o, String collection){
+    public void writeInDb(Object o, String collection, String document){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseDatabase fb = FirebaseDatabase.getInstance();
-        db.collection(collection).add(o).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
-            }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+        db.collection(collection).document(document).set(o);
     }
 
     public void updateFieldInDb(Containership bato, String collection, String document) {
@@ -120,9 +112,40 @@ public class BoatListActivity extends AppCompatActivity {
     }
 
     public void writeAllObjects(Containership bato){
-        writeInDb(bato, "Containership");
-        //writeInDb(bato.getConteneur(), "Container");
-        writeInDb(bato.getDepart(), "Port");
-        writeInDb(bato.getType(), "Type");
+        writeInDb(bato, "Containership", bato.getBoat_name());
+        //writeInDb(bato.getConteneur(), "Container", bato.getBoat_name());
+        writeInDb(bato.getDepart(), "Port", bato.getBoat_name());
+        writeInDb(bato.getType(), "Type", bato.getBoat_name());
+    }
+
+    public boolean getObjectInDB(final String doc){
+        FirebaseFirestore ff = FirebaseFirestore.getInstance();
+        final boolean exists = false;
+        ff.collection("Containership").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    for (DocumentSnapshot ds : task.getResult().getDocuments()){
+                        if (doc.equals(ds.getId()))
+                        {
+                            setExists(exists);
+                            return;
+                        }
+                    }
+                }
+            }
+        });
+        return exists;
+    }
+
+    private void setExists(boolean exists){
+        exists = !exists;
+    }
+
+    public void controllerWritingBD(Containership bato){
+        if (getObjectInDB(bato.getBoat_name()))
+            writeAllObjects(bato);
+        else
+            updateFieldInDb(bato, "Containership", bato.getBoat_name());
     }
 }
