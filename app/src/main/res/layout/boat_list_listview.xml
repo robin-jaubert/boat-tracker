@@ -34,7 +34,10 @@
         <Button
             android:id="@+id/createBoat"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Create boat"
+            android:layout_weight="0.5"
+            android:visibility="invisible"/>
 
     </LinearLayout>
 

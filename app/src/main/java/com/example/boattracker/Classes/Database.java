@@ -22,22 +22,19 @@ import java.util.Map;
 
 public class Database implements Serializable {
 
-    private boolean exists;
-    private String TAG = "BoatListActivity";
+    private static boolean exists = false;
+    public static final String TAG = "BoatListActivity";
 
 
-    public Database() {
-        this.exists = false;
-    }
+    public Database() {}
 
 
-    public void writeInDb(Object o, String collection, String document){
+    private void writeInDb(Object o, String collection, String document){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseDatabase fb = FirebaseDatabase.getInstance();
         db.collection(collection).document(document).set(o);
     }
 
-    public void updateFieldInDb(Containership bato, String collection, String document) {
+    private void updateFieldInDb(Containership bato, String collection, String document) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference ref = db.collection(collection).document(document);
         Map<String, Object> fieldBato = new HashMap<>();
@@ -66,12 +63,11 @@ public class Database implements Serializable {
 
     public void writeAllObjects(Containership bato){
         writeInDb(bato, "Containership", bato.getBoat_name());
-        //writeInDb(bato.getConteneur(), "Container", bato.getBoat_name());
-        writeInDb(bato.getDepart(), "Port", bato.getBoat_name());
-        writeInDb(bato.getType(), "Type", bato.getBoat_name());
+        writeInDb(bato.getDepart(), "Port", bato.getDepart().getNom_port());
+        writeInDb(bato.getType(), "Type", bato.getType().getName());
     }
 
-    public boolean getObjectInDB(final String doc){
+    private boolean getObjectInDB(final String doc){
         FirebaseFirestore ff = FirebaseFirestore.getInstance();
         ff.collection("Containership").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -95,16 +91,23 @@ public class Database implements Serializable {
     }
 
     public void controllerWritingBD(Containership bato){
-        if (getObjectInDB(bato.getBoat_name()))
+        getObjectInDB(bato.getBoat_name());
+        if (!exists){
             writeAllObjects(bato);
-        else
+            System.out.println("!exist");
+            System.out.println("written");
+        }
+        else{
             updateFieldInDb(bato, "Containership", bato.getBoat_name());
+            System.out.println("exist");
+            System.out.println("updated");
+        }
     }
 
 
     public List<Containership> GetListBoatInDB(String bato){
         FirebaseFirestore ff = FirebaseFirestore.getInstance();
-        CollectionReference coll = ff.collection("Containership")
+        CollectionReference coll = ff.collection("Containership");
         List<Containership> listBoatDb = new ArrayList<>();
         if (getObjectInDB(bato)){
 

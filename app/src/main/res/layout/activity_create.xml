@@ -10,49 +10,49 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/modif_boat">
+        android:id="@+id/create_boat">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:hint="Nouveau nom : "
-            android:id="@+id/modif_boat_placeholder"/>
+            android:id="@+id/create_boat_placeholder"/>
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Nom du bateau"
             android:layout_gravity="center"
-            android:id="@+id/modif_boat_name"/>
+            android:id="@+id/create_boat_name"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/modif_captain">
+        android:id="@+id/create_captain">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Nouveau nom : "
             android:layout_gravity="center"
-            android:id="@+id/modif_captain_placeholder"/>
+            android:id="@+id/create_captain_placeholder"/>
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Nom du capitaine"
             android:layout_gravity="center"
-            android:id="@+id/modif_captain_name"/>
+            android:id="@+id/create_captain_name"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/modif_model">
+        android:id="@+id/create_model">
 
         <TextView
             android:layout_width="wrap_content"
@@ -71,16 +71,26 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/modif_accept">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/modif_accept_button"
+            android:id="@+id/create_accept_button"
             android:text="Confirmer"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:layout_weight="0.2"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:layout_gravity="center"
+            android:text="Annuler"
+            android:id="@+id/create_cancel_button"
+            />
 
     </LinearLayout>
 

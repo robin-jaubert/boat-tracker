@@ -40,7 +40,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.AuthentificationActivity"></activity>
+        <activity android:name=".Activities.AuthentificationActivity" />
+        <activity android:name=".Activities.ActivityCreate"></activity>
     </application>
 
 </manifest>

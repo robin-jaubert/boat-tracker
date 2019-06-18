@@ -15,6 +15,7 @@ import com.example.boattracker.Classes.Container;
 import com.example.boattracker.Classes.Containership;
 import com.example.boattracker.Classes.BoatItemAdapter;
 import com.example.boattracker.Classes.ContainershipType;
+import com.example.boattracker.Classes.Database;
 import com.example.boattracker.Classes.Port;
 import com.example.boattracker.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -56,10 +57,6 @@ public class BoatListActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
-
-        //if (requestCode == RC_SIGN_OUT){
-        //    Task<GoogleSignInAccount> task = Goo
-        //}
     }
 
     @Override
@@ -71,8 +68,6 @@ public class BoatListActivity extends AppCompatActivity {
 
         final ArrayList<Containership> ListeDesBateaux = new ArrayList<>();
 
-        //DocumentReference dr = db.collection("Containership").document("bato");
-
         Containership bato = new Containership.ContainershipBuilder("McBoatface", "Boaty").addPosition(-31.453988, 153.048861).addPort(new Port("Le Havre",49.486518, 0.090639)).addType(new ContainershipType("paquebot")).build();
 
         Containership batoo = new Containership.ContainershipBuilder("Bacon", "Chris P.").addPosition(61.902974,-8.050389).addPort(new Port ("Dublin", 53.344926, -6.196133)).addType(new ContainershipType("hydroglisseur")).build();
@@ -80,11 +75,13 @@ public class BoatListActivity extends AppCompatActivity {
         Containership batooo = new Containership.ContainershipBuilder("Mark", "Oh hi").addPosition(67.656155, -80.170957).addPort(new Port("Key Biscane", 25.687693, -80.155197)).addType(new ContainershipType("girouette")).build();
 
 
-        //writeAllObjects(bato);
-
         ListeDesBateaux.add(bato);
         ListeDesBateaux.add(batoo);
         ListeDesBateaux.add(batooo);
+
+        Database dbAccess = new Database();
+
+        dbAccess.controllerWritingBD(batoo);
 
         BoatItemAdapter adapter = new BoatItemAdapter(getApplicationContext(), ListeDesBateaux);
         listBoatDisplay.setAdapter(adapter);
@@ -134,18 +131,22 @@ public class BoatListActivity extends AppCompatActivity {
             }
         });
 
+        final Button create = findViewById(R.id.createBoat);
+        create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BoatListActivity.this, ActivityCreate.class);
+                startActivity(intent);
+            }
+        });
 
 
     }
-
-    //Fonctions pour la connexion
-
 
 
     private void signIn(){
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
-        //Intent signouintent =
     }
 
     private void signOut(){
@@ -165,7 +166,7 @@ public class BoatListActivity extends AppCompatActivity {
 
             updateUI(account);
         } catch (ApiException e) {
-            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+            Log.w(Database.TAG, "signInResult:failed code=" + e.getStatusCode());
             updateUI(null);
         }
     }
