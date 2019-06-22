@@ -9,6 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.boattracker.Classes.Containership;
+import com.example.boattracker.Classes.ContainershipType;
+import com.example.boattracker.Classes.Database;
+import com.example.boattracker.Classes.Port;
 import com.example.boattracker.R;
 
 public class ActivityCreate extends AppCompatActivity {
@@ -70,40 +74,24 @@ public class ActivityCreate extends AppCompatActivity {
                 }
 
                 setNewName(boatname.getText().toString());
-
-
                 setNewCapn(capnname.getText().toString());
-
-
                 setNewModel(model.getText().toString());
-
-
                 setNewLatPos(Double.parseDouble(posLat.getText().toString()));
-
-
                 setNewLongPos(Double.parseDouble(posLong.getText().toString()));
-
-
                 setNewStart(startName.getText().toString());
-
-
                 setNewLatStart(Double.parseDouble(startLat.getText().toString()));
-
-
                 setNewLongStart(Double.parseDouble(startLong.getText().toString()));
 
+                Containership newContainership = new Containership.ContainershipBuilder(getNewName(), getNewCapn())
+                        .addPosition(getNewLatPos(), getNewLongPos())
+                        .addPort(new Port(getNewStart(), getNewLatStart(), getNewLongStart()))
+                        .addType(new ContainershipType(getNewModel()))
+                        .build();
 
-
-                /*alertVoidDouble(posLat, newLatPos);
-                alertVoidDouble(posLong, newLongPos);
-                alertVoidDouble(startLat, newLatPos);
-                alertVoidDouble(startLong, newLongStart);
-
-                alertVoidString(boatname, newName);
-                alertVoidString(capnname, newCapn);
-                alertVoidString(model, newModel);
-                alertVoidString(startName, newStart);*/
-
+                Database dbAccess = new Database();
+                dbAccess.controllerWritingBD(newContainership);
+                Intent intent = new Intent(ActivityCreate.this, BoatListActivity.class);
+                startActivity(intent);
 
             }
         });

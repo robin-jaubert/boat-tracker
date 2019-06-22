@@ -67,11 +67,23 @@ public class BoatListActivity extends AppCompatActivity {
 
         final ArrayList<Containership> ListeDesBateaux = new ArrayList<>();
 
-        Containership bato = new Containership.ContainershipBuilder("McBoatface", "Boaty").addPosition(-31.453988, 153.048861).addPort(new Port("Le Havre",49.486518, 0.090639)).addType(new ContainershipType("caravelle")).build();
+        Containership bato = new Containership.ContainershipBuilder("McBoatface", "Boaty")
+                .addPosition(-31.453988, 153.048861)
+                .addPort(new Port("Le Havre",49.486518, 0.090639))
+                .addType(new ContainershipType("caravelle"))
+                .build();
 
-        Containership batoo = new Containership.ContainershipBuilder("Bacon", "Chris P.").addPosition(61.902974,-8.050389).addPort(new Port ("Dublin", 53.344926, -6.196133)).addType(new ContainershipType("papa")).build();
+        Containership batoo = new Containership.ContainershipBuilder("Bacon", "Chris P.")
+                .addPosition(61.902974,-8.050389)
+                .addPort(new Port ("Dublin", 53.344926, -6.196133))
+                .addType(new ContainershipType("papa"))
+                .build();
 
-        Containership batooo = new Containership.ContainershipBuilder("Mark", "Oh hi").addPosition(67.656155, -80.170957).addPort(new Port("Key Biscane", 25.687693, -80.155197)).addType(new ContainershipType("pirogue")).build();
+        Containership batooo = new Containership.ContainershipBuilder("Mark", "Oh hi")
+                .addPosition(67.656155, -80.170957)
+                .addPort(new Port("Key Biscane", 25.687693, -80.155197))
+                .addType(new ContainershipType("pirogue"))
+                .build();
 
 
        // FirebaseFirestore.getInstance().document("containerShip/containerShip" + this.id).set(boat);
