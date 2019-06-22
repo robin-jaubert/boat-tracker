@@ -94,13 +94,9 @@ public class Database implements Serializable {
         getObjectInDB(bato.getBoat_name());
         if (!exists){
             writeAllObjects(bato);
-            System.out.println("!exist");
-            System.out.println("written");
         }
         else{
             updateFieldInDb(bato, "Containership", bato.getBoat_name());
-            System.out.println("exist");
-            System.out.println("updated");
         }
     }
 

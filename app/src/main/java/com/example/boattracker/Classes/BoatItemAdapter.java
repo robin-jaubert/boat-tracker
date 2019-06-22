@@ -41,10 +41,11 @@ public class BoatItemAdapter extends BaseAdapter {
         convertView = LayoutInflater.from(context).inflate(R.layout.boat_list_textview, parent, false);
         TextView boat = convertView.findViewById(R.id.nameBoat);
         TextView capn = convertView.findViewById(R.id.nameCaptain);
+        TextView depart = convertView.findViewById(R.id.nameDepart);
 
         boat.setText("Bateau : " + listBoats.get(position).getBoat_name());
         capn.setText("Capitaine : " + listBoats.get(position).getCaptain_name());
-
+        depart.setText("Depart : " + listBoats.get(position).getDepart().getNom_port());
         return convertView;
     }
 }

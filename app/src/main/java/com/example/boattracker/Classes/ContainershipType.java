@@ -17,7 +17,7 @@ public class ContainershipType implements Serializable {
     public ContainershipType(String name) {
         this.name = name;
         this.id = count;
-        determineSize(name);
+        determineSize(this.name);
         //this.id = count;
         //setCount(++count);
     }
@@ -83,14 +83,15 @@ public class ContainershipType implements Serializable {
     }
 
     public String getName() {
-        if (!this.name.equals("yacht")
-                || !this.name.equals("paquebot")
-                || !this.name.equals("radeau")
-                || !this.name.equals("hydroglisseur")
-                ||!this.name.equals("caravelle")
-                ||!this.name.equals("pirogue"))
-            return "Inconnu";
-        return name;
+        if (this.name.equals("yacht")
+                || this.name.equals("paquebot")
+                || this.name.equals("radeau")
+                || this.name.equals("hydroglisseur")
+                ||this.name.equals("caravelle")
+                ||this.name.equals("pirogue"))
+            return this.name;
+        else
+            return "inconnu";
     }
 
     public void setName(String name) {
