@@ -1,11 +1,9 @@
 package com.example.boattracker.Activities;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.EditText;
 
-import com.example.boattracker.Classes.Containership;
 import com.example.boattracker.R;
 
 public class ModificationActivity extends AppCompatActivity {

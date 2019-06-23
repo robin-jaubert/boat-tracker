@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 public class BoatItemAdapter extends BaseAdapter {
 
+
+    private TextView boat, capn, depart;
     private Context context;
     private ArrayList<Containership> listBoats;
 
@@ -39,13 +41,19 @@ public class BoatItemAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = LayoutInflater.from(context).inflate(R.layout.boat_list_textview, parent, false);
-        TextView boat = convertView.findViewById(R.id.nameBoat);
-        TextView capn = convertView.findViewById(R.id.nameCaptain);
-        TextView depart = convertView.findViewById(R.id.nameDepart);
+        boat = convertView.findViewById(R.id.nameBoat);
+        capn = convertView.findViewById(R.id.nameCaptain);
+        depart = convertView.findViewById(R.id.nameDepart);
 
         boat.setText("Bateau : " + listBoats.get(position).getBoat_name());
         capn.setText("Capitaine : " + listBoats.get(position).getCaptain_name());
         depart.setText("Depart : " + listBoats.get(position).getDepart().getNom_port());
         return convertView;
+    }
+
+    public void maj(){
+        boat.setText("Bateau : " + listBoats.get(0).getBoat_name());
+        capn.setText("Capitaine : " + listBoats.get(0).getCaptain_name());
+        depart.setText("Depart : " + listBoats.get(0).getDepart().getNom_port());
     }
 }

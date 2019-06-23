@@ -1,9 +1,8 @@
 package com.example.boattracker.Activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,28 +69,29 @@ public class ActivityCreate extends AppCompatActivity {
                 }
 
                 else {
-                    Toast.makeText(getApplicationContext(), "check ok", Toast.LENGTH_SHORT).show();
+                    setNewName(boatname.getText().toString());
+                    setNewCapn(capnname.getText().toString());
+                    setNewModel(model.getText().toString());
+                    setNewLatPos(Double.parseDouble(posLat.getText().toString()));
+                    setNewLongPos(Double.parseDouble(posLong.getText().toString()));
+                    setNewStart(startName.getText().toString());
+                    setNewLatStart(Double.parseDouble(startLat.getText().toString()));
+                    setNewLongStart(Double.parseDouble(startLong.getText().toString()));
+
+                    Containership newContainership = new Containership.ContainershipBuilder(getNewName(), getNewCapn(), getNewLatPos(), getNewLongPos())
+                            .addPort(new Port(getNewStart(), getNewLatStart(), getNewLongStart()))
+                            .addType(new ContainershipType(getNewModel()))
+                            .build();
+
+                    Toast.makeText(getApplicationContext(),"" + newContainership.getId(), Toast.LENGTH_SHORT).show();
+
+                    Database dbAccess = new Database();
+                    dbAccess.controllerWritingBD(newContainership);
+                    Intent intent = new Intent(ActivityCreate.this, BoatListActivity.class);
+                    startActivity(intent);
                 }
 
-                setNewName(boatname.getText().toString());
-                setNewCapn(capnname.getText().toString());
-                setNewModel(model.getText().toString());
-                setNewLatPos(Double.parseDouble(posLat.getText().toString()));
-                setNewLongPos(Double.parseDouble(posLong.getText().toString()));
-                setNewStart(startName.getText().toString());
-                setNewLatStart(Double.parseDouble(startLat.getText().toString()));
-                setNewLongStart(Double.parseDouble(startLong.getText().toString()));
 
-                Containership newContainership = new Containership.ContainershipBuilder(getNewName(), getNewCapn())
-                        .addPosition(getNewLatPos(), getNewLongPos())
-                        .addPort(new Port(getNewStart(), getNewLatStart(), getNewLongStart()))
-                        .addType(new ContainershipType(getNewModel()))
-                        .build();
-
-                Database dbAccess = new Database();
-                dbAccess.controllerWritingBD(newContainership);
-                Intent intent = new Intent(ActivityCreate.this, BoatListActivity.class);
-                startActivity(intent);
 
             }
         });

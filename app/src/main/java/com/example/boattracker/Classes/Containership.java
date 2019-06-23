@@ -1,10 +1,17 @@
 package com.example.boattracker.Classes;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Containership implements Serializable {
 
+    public static ArrayList<Containership> allTheContainerships = new ArrayList<>();
 
+    private int id;
     private String boat_name;
     private String captain_name;
 
@@ -26,6 +33,20 @@ public class Containership implements Serializable {
         this.depart = builder.depart;
         this.type = builder.type;
         this.conteneur = builder.conteneur;
+        this.id = builder.id;
+    }
+
+    public void toDB(){
+        Map<String,Object> item = new HashMap<>();
+        item.put("id", this.id);
+        item.put("boat_name", this.boat_name);
+        item.put("captain_name", this.captain_name);
+        item.put("latitude", this.latitude);
+        item.put("longitude", this.longitude);
+        item.put("depart", "/Port/"+this.getDepart().getNom_port());
+        item.put("type", "/Type/"+this.getType().getName());
+
+        FirebaseFirestore.getInstance().document("Containership/"+this.boat_name).set(item);
     }
 
     public String getBoat_name() {
@@ -88,9 +109,10 @@ public class Containership implements Serializable {
 
     @Override
     public String toString() {
-        return "Bateau : " + boat_name + "\n"+ "Nom du capitaine : " + captain_name;
+        return id + " " + "Bateau : " + boat_name + "\n"+ "Nom du capitaine : " + captain_name + "\n" + "Depart : " + depart.getNom_port();
     }
 
+    public int getId(){return this.id;}
 
     public static class ContainershipBuilder{
         private String boat_name;
@@ -105,15 +127,13 @@ public class Containership implements Serializable {
 
         private Container conteneur;
 
-        public ContainershipBuilder (String name, String captain){
-            this.boat_name = name;
-            this.captain_name = captain;    
-        }
+        private int id = Containership.allTheContainerships.size();
 
-        public ContainershipBuilder addPosition(double lat, double lon){
+        public ContainershipBuilder (String name, String captain, double lat, double lon){
+            this.boat_name = name;
+            this.captain_name = captain;
             this.latitude = lat;
             this.longitude = lon;
-            return this;
         }
 
         public ContainershipBuilder addPort (Port port){
@@ -128,6 +148,11 @@ public class Containership implements Serializable {
 
         public ContainershipBuilder addContainer (Container conteneur){
             this.conteneur = conteneur;
+            return this;
+        }
+
+        public ContainershipBuilder addId (int number){
+            this.id = number;
             return this;
         }
 

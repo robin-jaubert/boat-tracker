@@ -1,17 +1,17 @@
 package com.example.boattracker.Classes;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
@@ -86,6 +86,23 @@ public class Database implements Serializable {
         return exists;
     }
 
+    public ArrayList<String> getDocumentNameInDb(String collection) {
+            FirebaseFirestore ff = FirebaseFirestore.getInstance();
+
+        final ArrayList<String> documents = new ArrayList<>();
+        ff.collection(collection).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                        documents.add(doc.getId());
+                    }
+                }
+            }
+        });
+            return documents;
+    }
+
     private void setExists(boolean exists){
         exists = !exists;
     }
@@ -101,14 +118,8 @@ public class Database implements Serializable {
     }
 
 
-    public List<Containership> GetListBoatInDB(String bato){
+    public static void sendInDb(Object o, String collection, String document){
         FirebaseFirestore ff = FirebaseFirestore.getInstance();
-        CollectionReference coll = ff.collection("Containership");
-        List<Containership> listBoatDb = new ArrayList<>();
-        if (getObjectInDB(bato)){
-
-            return listBoatDb;
-        }
-        else return null;
+        ff.collection(collection).document(document).set(o);
     }
 }

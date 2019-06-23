@@ -1,8 +1,9 @@
 package com.example.boattracker.Activities;
 
+import android.content.ComponentName;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,27 +26,35 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Future;
 
 public class BoatListActivity extends AppCompatActivity {
 
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 7;
-
+    private static final String TAG = "BoatListactivity";
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    final ArrayList<Containership> ListeDesBateaux = new ArrayList<>();
+    private Database dbaccess = new Database();
+    //private ArrayList<String> idDocuments = dbaccess.getDocumentNameInDb("Containership");
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -65,41 +74,9 @@ public class BoatListActivity extends AppCompatActivity {
 
         final ListView listBoatDisplay = findViewById(R.id.list_boat);
 
-        final ArrayList<Containership> ListeDesBateaux = new ArrayList<>();
-
-        Containership bato = new Containership.ContainershipBuilder("McBoatface", "Boaty")
-                .addPosition(-31.453988, 153.048861)
-                .addPort(new Port("Le Havre",49.486518, 0.090639))
-                .addType(new ContainershipType("caravelle"))
-                .build();
-
-        Containership batoo = new Containership.ContainershipBuilder("Bacon", "Chris P.")
-                .addPosition(61.902974,-8.050389)
-                .addPort(new Port ("Dublin", 53.344926, -6.196133))
-                .addType(new ContainershipType("papa"))
-                .build();
-
-        Containership batooo = new Containership.ContainershipBuilder("Mark", "Oh hi")
-                .addPosition(67.656155, -80.170957)
-                .addPort(new Port("Key Biscane", 25.687693, -80.155197))
-                .addType(new ContainershipType("pirogue"))
-                .build();
 
 
-       // FirebaseFirestore.getInstance().document("containerShip/containerShip" + this.id).set(boat);
-
-        ListeDesBateaux.add(bato);
-        ListeDesBateaux.add(batoo);
-        ListeDesBateaux.add(batooo);
-
-        Database dbAccess = new Database();
-
-        dbAccess.controllerWritingBD(batoo);
-        dbAccess.controllerWritingBD(batooo);
-        dbAccess.controllerWritingBD(bato);
-
-        BoatItemAdapter adapter = new BoatItemAdapter(getApplicationContext(), ListeDesBateaux);
-        listBoatDisplay.setAdapter(adapter);
+        final BoatItemAdapter adapter = new BoatItemAdapter(getApplicationContext(), ListeDesBateaux);
 
         listBoatDisplay.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -156,7 +133,11 @@ public class BoatListActivity extends AppCompatActivity {
         });
 
 
+        DocsIntoBoats(db, ListeDesBateaux, listBoatDisplay, adapter);
+
     }
+
+
 
 
     private void signIn(){
@@ -205,6 +186,55 @@ public class BoatListActivity extends AppCompatActivity {
             create.setVisibility(View.INVISIBLE);
         }
     }
+
+    public void DocsIntoBoats(final FirebaseFirestore ff, final ArrayList<Containership> listContainerships, final ListView view, final BoatItemAdapter adap){
+        ff.collection("Containership").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    for (final QueryDocumentSnapshot result : task.getResult()){
+                    final Containership bato = new Containership.ContainershipBuilder(
+                            result.get("boat_name").toString(),result.get("captain_name").toString(),Double.parseDouble(result.get("latitude").toString()), Double.parseDouble(result.get("longitude").toString()))
+                            .addId(Integer.parseInt(result.get("id").toString())).build();
+                    DocumentReference refType = ff.collection("Containership").document(result.get("type").toString()).collection("Type").document(result.get("type"));
+                    refType.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshotType) {
+                            try {
+                                ContainershipType typeBato = new ContainershipType(documentSnapshotType.get("name").toString());
+                                bato.setType(typeBato);
+                            }catch (Exception e){
+                                Log.e(TAG, "onSuccess createType: " + documentSnapshotType);
+                            }
+
+                        }
+                    });
+
+                    DocumentReference refPort = ff.document(result.get("depart").toString());
+                    refPort.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshotPort) {
+                            try {
+                                Port port = new Port(documentSnapshotPort.get("nom_port").toString(), Double.parseDouble(documentSnapshotPort.get("latitude").toString()), Double.parseDouble(documentSnapshotPort.get("longitude").toString()));
+                                bato.setDepart(port);
+                                listContainerships.add(bato);
+                                view.setAdapter(adap);
+                            }catch (Exception e){
+                                Log.e(TAG, "onSuccess createPort: " + documentSnapshotPort );
+                            }
+
+                        }
+                    });
+
+                    }
+                } else
+                    Log.d(TAG, "onComplete getDocs: ", task.getException());
+
+            }
+        });
+
+    }
+
 
 
 }

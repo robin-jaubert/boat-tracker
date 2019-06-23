@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 public class ContainershipType implements Serializable {
 
-    private static int count = 0;
 
     private int id;
 
@@ -14,12 +13,10 @@ public class ContainershipType implements Serializable {
     private int length;
     private int heigth;
 
-    public ContainershipType(String name) {
+    public ContainershipType(int id, String name) {
+        this.id = id;
         this.name = name;
-        this.id = count;
         determineSize(this.name);
-        //this.id = count;
-        //setCount(++count);
     }
 
     public void determineSize(String name){
@@ -74,13 +71,6 @@ public class ContainershipType implements Serializable {
         }
     }
 
-    public static int getCount() {
-        return count;
-    }
-
-    public static void setCount(int count) {
-        ContainershipType.count = count;
-    }
 
     public String getName() {
         if (this.name.equals("yacht")
