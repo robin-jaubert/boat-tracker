@@ -1,6 +1,10 @@
 package com.example.boattracker.Classes;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ContainershipType implements Serializable {
 
@@ -112,5 +116,33 @@ public class ContainershipType implements Serializable {
         this.heigth = heigth;
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void toDB(){
+        Map<String, Object> item = new HashMap<>();
+        item.put("id", this.id);
+        item.put("name", this.name);
+        item.put("width", this.width);
+        item.put("height", this.heigth);
+        item.put("lenght", this.length);
+
+        FirebaseFirestore.getInstance().document("Type/"+this.id).set(item);
+    }
+
+    @Override
+    public String toString() {
+        return "ContainershipType{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", width=" + width +
+                ", length=" + length +
+                ", heigth=" + heigth +
+                '}';
+    }
 }

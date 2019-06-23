@@ -9,8 +9,6 @@ import java.util.Map;
 
 public class Containership implements Serializable {
 
-    public static ArrayList<Containership> allTheContainerships = new ArrayList<>();
-
     private int id;
     private String boat_name;
     private String captain_name;
@@ -24,17 +22,27 @@ public class Containership implements Serializable {
 
     private Container conteneur;
 
+    public static ArrayList<Containership> allTheContainerships = new ArrayList<>();
 
-    public Containership (ContainershipBuilder builder){
-        this.boat_name = builder.boat_name;
-        this.captain_name = builder.captain_name;
-        this.latitude = builder.latitude;
-        this.longitude = builder.longitude;
-        this.depart = builder.depart;
-        this.type = builder.type;
-        this.conteneur = builder.conteneur;
-        this.id = builder.id;
+    public Containership(String boat_name, String captain_name, double latitude, double longitude) {
+        this.boat_name = boat_name;
+        this.captain_name = captain_name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        allTheContainerships.add(this);
+        this.id = allTheContainerships.size();
     }
+
+    public Containership(int id, String boat_name, String captain_name, double latitude, double longitude) {
+        this.boat_name = boat_name;
+        this.captain_name = captain_name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        allTheContainerships.add(this);
+        this.id = id;
+    }
+
+
 
     public void toDB(){
         Map<String,Object> item = new HashMap<>();
@@ -43,10 +51,20 @@ public class Containership implements Serializable {
         item.put("captain_name", this.captain_name);
         item.put("latitude", this.latitude);
         item.put("longitude", this.longitude);
-        item.put("depart", "/Port/"+this.getDepart().getNom_port());
-        item.put("type", "/Type/"+this.getType().getName());
+        item.put("Depart", "/Port/"+this.depart.getId());
+        item.put("Type", "/Type/"+this.type.getId());
 
-        FirebaseFirestore.getInstance().document("Containership/"+this.boat_name).set(item);
+        FirebaseFirestore.getInstance().document("Containership/"+this.id).set(item);
+        this.depart.toDB();
+        this.type.toDB();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getBoat_name() {
@@ -81,15 +99,13 @@ public class Containership implements Serializable {
         this.longitude = longitude;
     }
 
-    public void setDepart(Port depart) {
-        this.depart = depart;
-    }
-
     public Port getDepart() {
         return depart;
     }
 
-    //public int getId(){return id;}
+    public void setDepart(Port depart) {
+        this.depart = depart;
+    }
 
     public ContainershipType getType() {
         return type;
@@ -109,56 +125,17 @@ public class Containership implements Serializable {
 
     @Override
     public String toString() {
-        return id + " " + "Bateau : " + boat_name + "\n"+ "Nom du capitaine : " + captain_name + "\n" + "Depart : " + depart.getNom_port();
-    }
-
-    public int getId(){return this.id;}
-
-    public static class ContainershipBuilder{
-        private String boat_name;
-        private String captain_name;
-
-        private double latitude;
-        private double longitude;
-
-        private Port depart;
-
-        private ContainershipType type;
-
-        private Container conteneur;
-
-        private int id = Containership.allTheContainerships.size();
-
-        public ContainershipBuilder (String name, String captain, double lat, double lon){
-            this.boat_name = name;
-            this.captain_name = captain;
-            this.latitude = lat;
-            this.longitude = lon;
-        }
-
-        public ContainershipBuilder addPort (Port port){
-            this.depart = port;
-            return this;
-        }
-
-        public ContainershipBuilder addType (ContainershipType type){
-            this.type = type;
-            return this;
-        }
-
-        public ContainershipBuilder addContainer (Container conteneur){
-            this.conteneur = conteneur;
-            return this;
-        }
-
-        public ContainershipBuilder addId (int number){
-            this.id = number;
-            return this;
-        }
-
-        public Containership build(){
-            return new Containership(this);
-        }
-
+        return "Containership{" +
+                "id=" + id +
+                ", boat_name='" + boat_name + '\'' +
+                ", captain_name='" + captain_name + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", depart=" + depart +
+                ", type=" + type +
+                ", conteneur=" + conteneur +
+                '}';
     }
 }
+
+

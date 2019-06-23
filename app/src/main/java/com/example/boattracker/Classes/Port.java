@@ -2,11 +2,13 @@ package com.example.boattracker.Classes;
 
 import android.location.Location;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Port implements Serializable {
-
-    private static int count = 0;
 
     private int id;
 
@@ -16,7 +18,8 @@ public class Port implements Serializable {
     private double longitude;
 
 
-    public Port(String nom_port, double latitude, double longitude) {
+    public Port(int id, String nom_port, double latitude, double longitude) {
+        setId(id);
         setNom_port(nom_port);
         setLatitude(latitude);
         setLongitude(longitude);
@@ -46,4 +49,31 @@ public class Port implements Serializable {
         this.longitude = longitude;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void toDB(){
+        Map<String, Object> item = new HashMap<>();
+        item.put("id", this.id);
+        item.put("name", this.nom_port);
+        item.put("latitude", this.latitude);
+        item.put("longitude", this.longitude);
+
+        FirebaseFirestore.getInstance().document("Port/"+this.id).set(item);
+    }
+
+    @Override
+    public String toString() {
+        return "Port{" +
+                "id=" + id +
+                ", nom_port='" + nom_port + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                '}';
+    }
 }

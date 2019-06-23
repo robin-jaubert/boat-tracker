@@ -1,6 +1,5 @@
 package com.example.boattracker.Classes;
 
-import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -53,7 +52,7 @@ public class Database implements Serializable {
         })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
-                    public void onFailure(@NonNull Exception e) {
+                    public void onFailure( Exception e) {
                         Log.w(TAG, "Error updating document", e);
                     }
                 });
@@ -71,7 +70,7 @@ public class Database implements Serializable {
         FirebaseFirestore ff = FirebaseFirestore.getInstance();
         ff.collection("Containership").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            public void onComplete( Task<QuerySnapshot> task) {
                 if (task.isSuccessful()){
                     for (DocumentSnapshot ds : task.getResult().getDocuments()){
                         if (doc.equals(ds.getId()))
@@ -92,7 +91,7 @@ public class Database implements Serializable {
         final ArrayList<String> documents = new ArrayList<>();
         ff.collection(collection).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            public void onComplete( Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
                         documents.add(doc.getId());

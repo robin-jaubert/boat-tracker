@@ -2,8 +2,8 @@ package com.example.boattracker.Activities;
 
 import android.content.Intent;
 import android.location.Location;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,9 +23,6 @@ public class DescriptionActivity extends AppCompatActivity {
         TextView nomBateau = findViewById(R.id.description_info_boat_name);
         TextView nomModele = findViewById(R.id.description_info_boat_model);
 
-        //Toast.makeText(getApplicationContext(), boatReceived.getCurrentLocation().distanceTo(boatReceived.getDepart().getPointDepart()) + "", Toast.LENGTH_SHORT).show();
-
-        //original
         nomBateau.setText("Bateau : " + boatReceived.getBoat_name());
         nomModele.setText("Modele : " + boatReceived.getType().getName());
 
@@ -71,10 +68,16 @@ public class DescriptionActivity extends AppCompatActivity {
         toModif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DescriptionActivity.this, ModificationActivity.class);
 
+                System.out.println("LA MODIF " + boatReceived);
+                Intent intent = new Intent(DescriptionActivity.this, ModificationActivity.class);
+                intent.putExtra("toModif", boatReceived);
                 startActivity(intent);
             }
         });
+    }
+
+    public void retour(){
+        finish();
     }
 }

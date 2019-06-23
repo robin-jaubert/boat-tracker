@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:hint="Nouveau nom : "
+            android:hint="Bateau : "
             android:id="@+id/modif_boat_placeholder"/>
 
         <EditText
@@ -36,7 +36,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Nouveau nom : "
+            android:hint="Capitaine : "
             android:layout_gravity="center"
             android:id="@+id/modif_captain_placeholder"/>
 
@@ -57,14 +57,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Nouveau modèle : "
+            android:hint="Modèle : "
             android:layout_gravity="center"
             android:id="@+id/modif_model_placeholder"/>
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Modèle du bateau"
+            android:hint="Nom du modele"
             android:layout_gravity="center"
             android:id="@+id/modif_model_name"/>
 
@@ -73,6 +73,124 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/modif_pos"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Position actuelle : "/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="Latitude : "
+                android:id="@+id/modif_pos_lat_placeholder"/>
+
+            <EditText
+                android:inputType="numberDecimal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="decimal"
+                android:layout_gravity="center"
+                android:id="@+id/modif_pos_lat_name"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="Latitude : "
+                android:id="@+id/modif_pos_long_placeholder"/>
+
+            <EditText
+                android:inputType="numberDecimal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="decimal"
+                android:layout_gravity="center"
+                android:id="@+id/modif_pos_long_name"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/modif_port"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Port départ : "/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="Port : "
+                android:id="@+id/modif_port_name_placeholder"/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Nom du port"
+                android:layout_gravity="center"
+                android:id="@+id/modif_port_name_name"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="Latitude : "
+                android:id="@+id/modif_port_lat_placeholder"/>
+
+            <EditText
+                android:inputType="numberDecimal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="decimal"
+                android:layout_gravity="center"
+                android:id="@+id/modif_port_lat_name"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="Latitude : "
+                android:id="@+id/modif_port_long_placeholder"/>
+
+            <EditText
+                android:inputType="numberDecimal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="decimal"
+                android:layout_gravity="center"
+                android:id="@+id/modif_port_long_name"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <!--boutons-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/modif_accept">
 
         <Button
@@ -80,8 +198,17 @@
             android:layout_height="wrap_content"
             android:id="@+id/modif_accept_button"
             android:text="Confirmer"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:layout_weight="0.2"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:layout_gravity="center"
+            android:text="Annuler"
+            android:id="@+id/modif_cancel_button"
+            />
 
     </LinearLayout>
-
 </LinearLayout>

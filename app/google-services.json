@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "365923418525-a0j4eohhuba3vjrk5o9qkt5db354vsa5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.boattracker",
+            "certificate_hash": "91ba626f18cec57dc9816cdd18630e99c089d183"
+          }
+        },
+        {
           "client_id": "365923418525-sv41eqk4g5s3bo6104nnokak18ggakro.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
