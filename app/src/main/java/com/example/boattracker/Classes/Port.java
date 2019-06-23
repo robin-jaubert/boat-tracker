@@ -1,6 +1,5 @@
 package com.example.boattracker.Classes;
 
-import android.location.Location;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 

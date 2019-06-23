@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 public class Container implements Serializable {
 
-    private static int count = 0;
 
     private int id;
 
@@ -12,12 +11,11 @@ public class Container implements Serializable {
     private int width;
     private int heigth;
 
-    public Container (int l, int hw){
+    public Container (int id, int l, int hw){
         this.length = l;
         this.width = hw;
         this.heigth = hw;
-        /*this.id = count;
-        setCount(++count);*/
+        this.id = id;
     }
 
     public int getLength() {
@@ -44,9 +42,6 @@ public class Container implements Serializable {
         this.heigth = heigth;
     }
 
-    public static void setCount(int count) {
-        Container.count = count;
-    }
 
     public int getId() {
         return id;

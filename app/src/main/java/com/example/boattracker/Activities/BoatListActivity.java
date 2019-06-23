@@ -1,6 +1,5 @@
 package com.example.boattracker.Activities;
 
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,12 +10,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.boattracker.Classes.Container;
 import com.example.boattracker.Classes.Containership;
 import com.example.boattracker.Classes.BoatItemAdapter;
-import com.example.boattracker.Classes.ContainershipType;
-import com.example.boattracker.Classes.Database;
-import com.example.boattracker.Classes.Port;
 import com.example.boattracker.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -24,7 +19,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -35,7 +29,6 @@ import static com.example.boattracker.Classes.Utils.DocsIntoBato;
 public class BoatListActivity extends AppCompatActivity {
 
     private GoogleSignInClient mGoogleSignInClient;
-    //private GoogleApiClient mGoogleApiClient;
     public static final int RC_SIGN_IN = 7;
     private static final String TAG = "BoatListactivity";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -149,7 +142,7 @@ public class BoatListActivity extends AppCompatActivity {
 
             updateUI(account);
         } catch (ApiException e) {
-            Log.w(Database.TAG, "signInResult:failed code=" + e.getStatusCode());
+            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
             updateUI(null);
         }
     }

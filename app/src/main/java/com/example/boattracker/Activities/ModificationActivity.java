@@ -6,11 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.boattracker.Classes.Containership;
 import com.example.boattracker.Classes.ContainershipType;
-import com.example.boattracker.Classes.Database;
 import com.example.boattracker.Classes.Port;
 import com.example.boattracker.R;
 
@@ -85,71 +83,6 @@ public class ModificationActivity extends AppCompatActivity {
 
 
         });
-    }
-
-
-    public String getupdateName() {
-        return updateName;
-    }
-
-    public void setupdateName(String updateName) {
-        this.updateName = updateName;
-    }
-
-    public String getupdateCapn() {
-        return updateCapn;
-    }
-
-    public void setupdateCapn(String updateCapn) {
-        this.updateCapn = updateCapn;
-    }
-
-    public String getupdateModel() {
-        return updateModel;
-    }
-
-    public void setupdateModel(String updateModel) {
-        this.updateModel = updateModel;
-    }
-
-    public double getupdateLatPos() {
-        return updateLatPos;
-    }
-
-    public void setupdateLatPos(double updateLatPos) {
-        this.updateLatPos = updateLatPos;
-    }
-
-    public double getupdateLongPos() {
-        return updateLongPos;
-    }
-
-    public void setupdateLongPos(double updateLongPos) {
-        this.updateLongPos = updateLongPos;
-    }
-
-    public String getupdateStart() {
-        return updateStart;
-    }
-
-    public void setupdateStart(String updateStart) {
-        this.updateStart = updateStart;
-    }
-
-    public double getupdateLatStart() {
-        return updateLatStart;
-    }
-
-    public void setupdateLatStart(double updateLatStart) {
-        this.updateLatStart = updateLatStart;
-    }
-
-    public double getupdateLongStart() {
-        return updateLongStart;
-    }
-
-    public void setupdateLongStart(double updateLongStart) {
-        this.updateLongStart = updateLongStart;
     }
 
     private Object checkEmptyInput(Object o, EditText eT){

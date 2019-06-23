@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.example.boattracker.Classes.Containership;
 import com.example.boattracker.Classes.ContainershipType;
-import com.example.boattracker.Classes.Database;
 import com.example.boattracker.Classes.Port;
 import com.example.boattracker.R;
 
